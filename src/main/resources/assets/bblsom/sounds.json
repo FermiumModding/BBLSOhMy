@@ -1,0 +1,55 @@
+{
+    "block_honey_slide": {
+        "sounds": [
+            "bblsom:block_honey_slide_0",
+            "bblsom:block_honey_slide_1",
+            "bblsom:block_honey_slide_2",
+            "bblsom:block_honey_slide_3"
+        ]
+    },
+    "block_honey_break": {
+        "sounds": [
+            "bblsom:block_honey_dig_0",
+            "bblsom:block_honey_dig_1",
+            "bblsom:block_honey_dig_2",
+            "bblsom:block_honey_dig_3",
+            "bblsom:block_honey_dig_4"
+        ]
+    },
+    "block_honey_step": {
+        "sounds": [
+            "bblsom:block_honey_step_0",
+            "bblsom:block_honey_step_1",
+            "bblsom:block_honey_step_2",
+            "bblsom:block_honey_step_3",
+            "bblsom:block_honey_step_4"
+        ]
+    },
+    "block_honey_place": {
+        "sounds": [
+            "bblsom:block_honey_dig_0",
+            "bblsom:block_honey_dig_1",
+            "bblsom:block_honey_dig_2",
+            "bblsom:block_honey_dig_3",
+            "bblsom:block_honey_dig_4"
+        ]
+    },
+    "block_honey_hit": {
+        "sounds": [
+            "bblsom:block_honey_step_0",
+            "bblsom:block_honey_step_1",
+            "bblsom:block_honey_step_2",
+            "bblsom:block_honey_step_3",
+            "bblsom:block_honey_step_4"
+        ]
+    },
+    "block_honey_fall": {
+        "sounds": [
+            "bblsom:block_honey_step_0",
+            "bblsom:block_honey_step_1",
+            "bblsom:block_honey_step_2",
+            "bblsom:block_honey_step_3",
+            "bblsom:block_honey_step_4"
+        ]
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "bblsom:block_honey" },
+        "inventory": { "model": "bblsom:block_honey" }
+    }
+}

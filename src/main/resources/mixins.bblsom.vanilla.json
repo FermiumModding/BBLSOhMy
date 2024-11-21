@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "bblsom.mixin",
+  "refmap": "mixins.bblsom.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "mixins": [
+    "vanilla.BlockDynamicLiquidMixin",
+    "vanilla.BlockFluidBaseMixin",
+    "vanilla.EntityBoatMixin",
+    "vanilla.IEntityLivingBaseMixin"
+  ],
+  "injectors": {
+    "maxShiftBy": 10
+  },
+  "client": [
+    "vanilla.GuiEditSignMixin",
+    "vanilla.RenderBoatMixin",
+    "vanilla.TileEntitySignRendererMixin"
+  ]
+}
