@@ -24,6 +24,9 @@ public class ClientModRegistry {
         for(Item item : ModRegistry.ITEMS_SIGNS) {
             registerModels(item);
         }
+        for(Item item : ModRegistry.ITEMS_HONEY) {
+            registerModels(item);
+        }
         for(Item item : ModRegistry.ITEMS_BOATS) {
             registerModels(item);
         }
@@ -36,8 +39,8 @@ public class ClientModRegistry {
         for(Block block : ModRegistry.BLOCKS_LEVERS) {
             registerModels(Item.getItemFromBlock(block));
         }
-        if(ForgeConfigHandler.server.registerHoneyBlock) {
-            registerModels(ModRegistry.BLOCK_HONEY_ITEM);
+        for(Block block : ModRegistry.BLOCKS_HONEY) {
+            registerModels(Item.getItemFromBlock(block));
         }
     }
 

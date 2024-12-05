@@ -63,10 +63,13 @@ public class ForgeConfigHandler {
 		@Config.RequiresMcRestart
 		public String[] customHorseArmors = {""};
 		
-		@Config.Comment("Whether or not to register a backported honey block")
-		@Config.Name("Register Honey Block")
+		@Config.Comment(
+				"Custom Honey Blocks to be registered" + "\n" +
+						"Format: String name" + "\n" +
+						"String name: the name of the item/block to be registered")
+		@Config.Name("Custom Honey Block Entries")
 		@Config.RequiresMcRestart
-		public boolean registerHoneyBlock = true;
+		public String[] customHoneyBlocks = {"block_honey"};
 	}
 
 	@Mod.EventBusSubscriber(modid = BBLSOhMy.MODID)

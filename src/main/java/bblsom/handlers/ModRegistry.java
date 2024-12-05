@@ -10,7 +10,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
@@ -31,11 +30,13 @@ public class ModRegistry {
         public static final List<Item> ITEMS_BUTTONS = new ArrayList<>();
         public static final List<Item> ITEMS_LEVERS = new ArrayList<>();
         public static final List<Item> ITEMS_SIGNS = new ArrayList<>();
+        public static final List<Item> ITEMS_HONEY = new ArrayList<>();
         public static final List<CustomItemBoat> ITEMS_BOATS = new ArrayList<>();
         public static final List<Item> ITEMS_HORSEARMOR = new ArrayList<>();
         public static final List<Block> BLOCKS_BUTTONS = new ArrayList<>();
         public static final List<Block> BLOCKS_LEVERS = new ArrayList<>();
         public static final List<Block> BLOCKS_SIGNS = new ArrayList<>();
+        public static final List<Block> BLOCKS_HONEY = new ArrayList<>();
         
         public static final SoundEvent BLOCK_HONEY_SLIDE = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_slide")).setRegistryName("block_honey_slide");
         public static final SoundEvent BLOCK_HONEY_BREAK = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_break")).setRegistryName("block_honey_break");
@@ -45,9 +46,6 @@ public class ModRegistry {
         public static final SoundEvent BLOCK_HONEY_FALL = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_fall")).setRegistryName("block_honey_fall");
         
         public static final SoundType BLOCK_HONEY_TYPE = new SoundType(1.0F, 1.0F, BLOCK_HONEY_BREAK, BLOCK_HONEY_STEP, BLOCK_HONEY_PLACE, BLOCK_HONEY_HIT, BLOCK_HONEY_FALL);
-        
-        public static final Block BLOCK_HONEY = new CustomBlockHoney();
-        public static final Item BLOCK_HONEY_ITEM = new ItemBlock(BLOCK_HONEY).setRegistryName(BLOCK_HONEY.getRegistryName()).setTranslationKey(BLOCK_HONEY.getTranslationKey());
         
         public static void init() {
                 for(String entry : ForgeConfigHandler.server.customButtons) {
@@ -108,6 +106,11 @@ public class ModRegistry {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse horse armor entry: " + entry);
                         }
                 }
+                for(String entry : ForgeConfigHandler.server.customHoneyBlocks) {
+                        String name = entry.trim();
+                        if(name.isEmpty()) continue;
+                        BLOCKS_HONEY.add(new CustomBlockHoney(name));
+                }
         }
 
         @SubscribeEvent
@@ -127,8 +130,8 @@ public class ModRegistry {
                 for(Item item : ITEMS_HORSEARMOR) {
                         event.getRegistry().register(item);
                 }
-                if(ForgeConfigHandler.server.registerHoneyBlock) {
-                        event.getRegistry().register(BLOCK_HONEY_ITEM);
+                for(Item item : ITEMS_HONEY) {
+                        event.getRegistry().register(item);
                 }
         }
         
@@ -143,8 +146,8 @@ public class ModRegistry {
                 for(Block block : BLOCKS_SIGNS) {
                         event.getRegistry().register(block);
                 }
-                if(ForgeConfigHandler.server.registerHoneyBlock) {
-                        event.getRegistry().register(BLOCK_HONEY);
+                for(Block block : BLOCKS_HONEY) {
+                        event.getRegistry().register(block);
                 }
         }
         
@@ -159,14 +162,12 @@ public class ModRegistry {
         
         @SubscribeEvent
         public static void registerSoundEvent(RegistryEvent.Register<SoundEvent> event) {
-                if(ForgeConfigHandler.server.registerHoneyBlock) {
-                        event.getRegistry().register(BLOCK_HONEY_SLIDE);
-                        event.getRegistry().register(BLOCK_HONEY_BREAK);
-                        event.getRegistry().register(BLOCK_HONEY_STEP);
-                        event.getRegistry().register(BLOCK_HONEY_PLACE);
-                        event.getRegistry().register(BLOCK_HONEY_HIT);
-                        event.getRegistry().register(BLOCK_HONEY_FALL);
-                }
+                event.getRegistry().register(BLOCK_HONEY_SLIDE);
+                event.getRegistry().register(BLOCK_HONEY_BREAK);
+                event.getRegistry().register(BLOCK_HONEY_STEP);
+                event.getRegistry().register(BLOCK_HONEY_PLACE);
+                event.getRegistry().register(BLOCK_HONEY_HIT);
+                event.getRegistry().register(BLOCK_HONEY_FALL);
         }
         
         private static void registerEntity(EntityEntryBuilder builder, RegistryEvent.Register<EntityEntry> event, Class<? extends Entity> entityClass, String name, int id, int range) {

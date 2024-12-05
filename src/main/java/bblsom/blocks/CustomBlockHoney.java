@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -26,12 +27,13 @@ public class CustomBlockHoney extends BlockBreakable {
 	private static final AxisAlignedBB HONEY_COLLISION_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
 	protected static final AxisAlignedBB HONEY_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 1.0D, 0.9375D);
 	
-	public CustomBlockHoney() {
+	public CustomBlockHoney(String name) {
 		super(Material.CLAY, false, MapColor.GOLD);
-		this.setRegistryName(BBLSOhMy.MODID + ":block_honey");
-		this.setTranslationKey(BBLSOhMy.MODID + ".block_honey");
+		this.setRegistryName(BBLSOhMy.MODID + ":" + name);
+		this.setTranslationKey(BBLSOhMy.MODID + "." + name);
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
 		this.setSoundType(ModRegistry.BLOCK_HONEY_TYPE);
+		ModRegistry.ITEMS_HONEY.add(new ItemBlock(this).setRegistryName(this.getRegistryName()).setTranslationKey(this.getTranslationKey()));
 	}
 	
 	@Override

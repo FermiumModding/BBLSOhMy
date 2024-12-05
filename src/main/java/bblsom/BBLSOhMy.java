@@ -12,7 +12,7 @@ import bblsom.proxy.CommonProxy;
 @Mod(modid = BBLSOhMy.MODID, version = BBLSOhMy.VERSION, name = BBLSOhMy.NAME, dependencies = "required:fermiumbooter")
 public class BBLSOhMy {
     public static final String MODID = "bblsom";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
     public static final String NAME = "BBLSOhMy";
     public static final Logger LOGGER = LogManager.getLogger();
 	
