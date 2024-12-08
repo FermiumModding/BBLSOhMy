@@ -70,6 +70,42 @@ public class ForgeConfigHandler {
 		@Config.Name("Custom Honey Block Entries")
 		@Config.RequiresMcRestart
 		public String[] customHoneyBlocks = {"block_honey"};
+		
+		@Config.Comment(
+				"Custom Doors to be registered" + "\n" +
+						"Format: String name, Boolean wooden" + "\n" +
+						"String name: the name of the item/block to be registered" + "\n" +
+						"Boolean wooden: whether the door should be treated as wooden or not (Affects sound and redstone interaction)")
+		@Config.Name("Custom Door Entries")
+		@Config.RequiresMcRestart
+		public String[] customDoors = {""};
+		
+		@Config.Comment(
+				"Custom Trap Doors to be registered" + "\n" +
+						"Format: String name, Boolean wooden" + "\n" +
+						"String name: the name of the item/block to be registered" + "\n" +
+						"Boolean wooden: whether the trap door should be treated as wooden or not (Affects sound and redstone interaction)")
+		@Config.Name("Custom Trap Door Entries")
+		@Config.RequiresMcRestart
+		public String[] customTrapDoors = {""};
+		
+		@Config.Comment(
+				"Custom Pressure Plates to be registered" + "\n" +
+						"Format: String name, Boolean wooden" + "\n" +
+						"String name: the name of the item/block to be registered" + "\n" +
+						"Boolean wooden: whether the trap door should be treated as wooden or not (Affects sound and redstone interaction)")
+		@Config.Name("Custom Pressure Plate Entries")
+		@Config.RequiresMcRestart
+		public String[] customPressurePlates = {""};
+		
+		@Config.Comment(
+				"Custom Weighted Pressure Plates to be registered" + "\n" +
+						"Format: String name, int tickrate" + "\n" +
+						"String name: the name of the item/block to be registered" + "\n" +
+						"int maxWeight: max weight to trigger the pressure plate")
+		@Config.Name("Custom Weighted Pressure Plate Entries")
+		@Config.RequiresMcRestart
+		public String[] customWeightedPressurePlates = {""};
 	}
 
 	@Mod.EventBusSubscriber(modid = BBLSOhMy.MODID)

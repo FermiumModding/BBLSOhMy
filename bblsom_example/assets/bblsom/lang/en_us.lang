@@ -1,5 +1,9 @@
 tile.bblsom.button_black.name=Black Button
 tile.bblsom.lever_black.name=Black Lever
+item.tile.bblsom.door_black.name=Black Door
+tile.bblsom.trapdoor_black.name=Black Trap Door
+tile.bblsom.pressureplate_black.name=Black Pressure Plate
+tile.bblsom.weightedpressureplate_black.name=Black Weighted Pressure Plate
 item.bblsom.sign_black.name=Black Sign
 item.bblsom.boat_black.name=Black Boat
 item.bblsom.horsearmor_black.name=Black Horse Armor

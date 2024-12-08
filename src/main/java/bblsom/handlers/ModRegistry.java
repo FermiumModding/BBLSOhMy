@@ -31,12 +31,20 @@ public class ModRegistry {
         public static final List<Item> ITEMS_LEVERS = new ArrayList<>();
         public static final List<Item> ITEMS_SIGNS = new ArrayList<>();
         public static final List<Item> ITEMS_HONEY = new ArrayList<>();
+        public static final List<Item> ITEMS_DOORS = new ArrayList<>();
+        public static final List<Item> ITEMS_TRAPDOORS = new ArrayList<>();
+        public static final List<Item> ITEMS_PRESSUREPLATES = new ArrayList<>();
+        public static final List<Item> ITEMS_PRESSUREPLATESWEIGHTED = new ArrayList<>();
         public static final List<CustomItemBoat> ITEMS_BOATS = new ArrayList<>();
         public static final List<Item> ITEMS_HORSEARMOR = new ArrayList<>();
         public static final List<Block> BLOCKS_BUTTONS = new ArrayList<>();
         public static final List<Block> BLOCKS_LEVERS = new ArrayList<>();
         public static final List<Block> BLOCKS_SIGNS = new ArrayList<>();
         public static final List<Block> BLOCKS_HONEY = new ArrayList<>();
+        public static final List<Block> BLOCKS_DOORS = new ArrayList<>();
+        public static final List<Block> BLOCKS_TRAPDOORS = new ArrayList<>();
+        public static final List<Block> BLOCKS_PRESSUREPLATES = new ArrayList<>();
+        public static final List<Block> BLOCKS_PRESSUREPLATESWEIGHTED = new ArrayList<>();
         
         public static final SoundEvent BLOCK_HONEY_SLIDE = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_slide")).setRegistryName("block_honey_slide");
         public static final SoundEvent BLOCK_HONEY_BREAK = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_break")).setRegistryName("block_honey_break");
@@ -111,6 +119,54 @@ public class ModRegistry {
                         if(name.isEmpty()) continue;
                         BLOCKS_HONEY.add(new CustomBlockHoney(name));
                 }
+                for(String entry : ForgeConfigHandler.server.customDoors) {
+                        if(entry.isEmpty()) continue;
+                        String[] args = entry.split(",");
+                        try {
+                                String name = args[0].trim();
+                                boolean wooden = Boolean.parseBoolean(args[1].trim());
+                                BLOCKS_DOORS.add(new CustomBlockDoor(name, wooden));
+                        }
+                        catch(Exception ex) {
+                                BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse door entry: " + entry);
+                        }
+                }
+                for(String entry : ForgeConfigHandler.server.customTrapDoors) {
+                        if(entry.isEmpty()) continue;
+                        String[] args = entry.split(",");
+                        try {
+                                String name = args[0].trim();
+                                boolean wooden = Boolean.parseBoolean(args[1].trim());
+                                BLOCKS_TRAPDOORS.add(new CustomBlockTrapDoor(name, wooden));
+                        }
+                        catch(Exception ex) {
+                                BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse trapdoor entry: " + entry);
+                        }
+                }
+                for(String entry : ForgeConfigHandler.server.customPressurePlates) {
+                        if(entry.isEmpty()) continue;
+                        String[] args = entry.split(",");
+                        try {
+                                String name = args[0].trim();
+                                boolean wooden = Boolean.parseBoolean(args[1].trim());
+                                BLOCKS_PRESSUREPLATES.add(new CustomBlockPressurePlate(name, wooden));
+                        }
+                        catch(Exception ex) {
+                                BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse pressure plate entry: " + entry);
+                        }
+                }
+                for(String entry : ForgeConfigHandler.server.customWeightedPressurePlates) {
+                        if(entry.isEmpty()) continue;
+                        String[] args = entry.split(",");
+                        try {
+                                String name = args[0].trim();
+                                int weight = Integer.parseInt(args[1].trim());
+                                BLOCKS_PRESSUREPLATESWEIGHTED.add(new CustomBlockPressurePlateWeighted(name, weight));
+                        }
+                        catch(Exception ex) {
+                                BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse weighted pressure plate entry: " + entry);
+                        }
+                }
         }
 
         @SubscribeEvent
@@ -133,6 +189,18 @@ public class ModRegistry {
                 for(Item item : ITEMS_HONEY) {
                         event.getRegistry().register(item);
                 }
+                for(Item item : ITEMS_DOORS) {
+                        event.getRegistry().register(item);
+                }
+                for(Item item : ITEMS_TRAPDOORS) {
+                        event.getRegistry().register(item);
+                }
+                for(Item item : ITEMS_PRESSUREPLATES) {
+                        event.getRegistry().register(item);
+                }
+                for(Item item : ITEMS_PRESSUREPLATESWEIGHTED) {
+                        event.getRegistry().register(item);
+                }
         }
         
         @SubscribeEvent
@@ -147,6 +215,18 @@ public class ModRegistry {
                         event.getRegistry().register(block);
                 }
                 for(Block block : BLOCKS_HONEY) {
+                        event.getRegistry().register(block);
+                }
+                for(Block block : BLOCKS_DOORS) {
+                        event.getRegistry().register(block);
+                }
+                for(Block block : BLOCKS_TRAPDOORS) {
+                        event.getRegistry().register(block);
+                }
+                for(Block block : BLOCKS_PRESSUREPLATES) {
+                        event.getRegistry().register(block);
+                }
+                for(Block block : BLOCKS_PRESSUREPLATESWEIGHTED) {
                         event.getRegistry().register(block);
                 }
         }
