@@ -17,7 +17,7 @@ public abstract class RenderBoatMixin {
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	public void bblsom_vanillaRenderBoat_getEntityTexture(EntityBoat entity, CallbackInfoReturnable<ResourceLocation> cir) {
+	private void bblsom_vanillaRenderBoat_getEntityTexture(EntityBoat entity, CallbackInfoReturnable<ResourceLocation> cir) {
 		if(entity instanceof CustomEntityBoat) {
 			cir.setReturnValue(((CustomEntityBoat)entity).getCustomBoatType().getTexture());
 		}

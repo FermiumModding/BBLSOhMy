@@ -16,7 +16,7 @@ public abstract class EntityBoatMixin {
 			method = "updateFallState",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/item/EntityBoat;entityDropItem(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/item/EntityItem;")
 	)
-	public EntityItem bblsom_vanillaEntityBoat_updateFallState_entityDropItem(EntityBoat instance, ItemStack stack, float v) {
+	private EntityItem bblsom_vanillaEntityBoat_updateFallState_entityDropItem(EntityBoat instance, ItemStack stack, float v) {
 		if(instance instanceof CustomEntityBoat) {
 			return instance.entityDropItem(((CustomEntityBoat)instance).getDroppedPlanks(), v);
 		}
@@ -27,7 +27,7 @@ public abstract class EntityBoatMixin {
 			method = "updateFallState",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/item/EntityBoat;dropItemWithOffset(Lnet/minecraft/item/Item;IF)Lnet/minecraft/entity/item/EntityItem;")
 	)
-	public EntityItem bblsom_vanillaEntityBoat_updateFallState_dropItemWithOffset(EntityBoat instance, Item item, int i, float v) {
+	private EntityItem bblsom_vanillaEntityBoat_updateFallState_dropItemWithOffset(EntityBoat instance, Item item, int i, float v) {
 		if(instance instanceof CustomEntityBoat) {
 			return instance.entityDropItem(((CustomEntityBoat)instance).getDroppedSticks(), v);
 		}

@@ -2,6 +2,7 @@ package bblsom.mixin.vanilla;
 
 import bblsom.blocks.CustomBlockStandingSign;
 import bblsom.blocks.ICustomBlockSign;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -19,16 +20,15 @@ public abstract class TileEntitySignRendererMixin extends TileEntitySpecialRende
 	@Unique
 	private ResourceLocation bblsom$currentSignTexture = null;
 	
-	@Redirect(
+	@ModifyExpressionValue(
 			method = "render(Lnet/minecraft/tileentity/TileEntitySign;DDDFIF)V",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/tileentity/TileEntitySign;getBlockType()Lnet/minecraft/block/Block;")
 	)
-	public Block bblsom_vanillaTileEntitySignRenderer_render_getBlockType(TileEntitySign instance) {
-		Block block = instance.getBlockType();
-		if(block instanceof ICustomBlockSign) this.bblsom$currentSignTexture = ((ICustomBlockSign)block).getSignTexture();
+	private Block bblsom_vanillaTileEntitySignRenderer_render_getBlockType(Block original) {
+		if(original instanceof ICustomBlockSign) this.bblsom$currentSignTexture = ((ICustomBlockSign)original).getSignTexture();
 		else this.bblsom$currentSignTexture = null;
-		//Janky workaround but easier
-		return block instanceof CustomBlockStandingSign ? Blocks.STANDING_SIGN : block;
+		if(original instanceof CustomBlockStandingSign) return Blocks.STANDING_SIGN;
+		return original;
 	}
 	
 	@Redirect(

@@ -1,5 +1,6 @@
 package bblsom;
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -11,6 +12,7 @@ public class BBLSOhMyPlugin implements IFMLLoadingPlugin {
 	
 	public BBLSOhMyPlugin() {
 		MixinBootstrap.init();
+		MixinExtrasBootstrap.init();
 		FermiumRegistryAPI.enqueueMixin(false, "mixins.bblsom.vanilla.json");
 	}
 	

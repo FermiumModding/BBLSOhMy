@@ -6,17 +6,33 @@
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "mixins": [
+    "vanilla.BlockBushMixin",
+    "vanilla.BlockCropsMixin",
+    "vanilla.BlockDeadBushMixin",
     "vanilla.BlockDynamicLiquidMixin",
     "vanilla.BlockFluidBaseMixin",
+    "vanilla.BlockGrassMixin",
+    "vanilla.BlockMushroomMixin",
+    "vanilla.BlockMyceliumMixin",
+    "vanilla.BlockStemMixin",
+    "vanilla.EntityAIHarvestFarmlandMixin",
     "vanilla.EntityBoatMixin",
-    "vanilla.IEntityLivingBaseMixin"
+    "vanilla.EntityRabbitMixin",
+    "vanilla.IBlockBushMixin",
+    "vanilla.IEntityLivingBaseMixin",
+    "vanilla.ItemHoeMixin",
+    "vanilla.WorldGenAbstractTreeMixin",
+    "vanilla.WorldGenBigMushroomMixin"
+  ],
+  "client": [
+    "vanilla.BlockFarmlandClientMixin",
+    "vanilla.BlockGrassPathClientMixin",
+    "vanilla.GuiEditSignMixin",
+    "vanilla.RenderBoatMixin",
+    "vanilla.RenderGlobalMixin",
+    "vanilla.TileEntitySignRendererMixin"
   ],
   "injectors": {
     "maxShiftBy": 10
-  },
-  "client": [
-    "vanilla.GuiEditSignMixin",
-    "vanilla.RenderBoatMixin",
-    "vanilla.TileEntitySignRendererMixin"
-  ]
+  }
 }

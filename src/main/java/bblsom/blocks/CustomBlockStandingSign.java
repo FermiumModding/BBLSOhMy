@@ -22,7 +22,7 @@ public class CustomBlockStandingSign extends BlockStandingSign implements ICusto
 		super();
 		this.setRegistryName(BBLSOhMy.MODID + ":" + name + "_standing");
 		this.setTranslationKey(BBLSOhMy.MODID + "." + name + "_standing");
-		this.setHardness(0.5F);
+		this.setHardness(1.0F);
 		this.setSoundType(SoundType.WOOD);
 		this.item = item;
 		this.SIGN_TEXTURE = new ResourceLocation(BBLSOhMy.MODID + ":" + "textures/signs/" + name + ".png");
