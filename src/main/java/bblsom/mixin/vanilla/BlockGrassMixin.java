@@ -1,57 +1,76 @@
 package bblsom.mixin.vanilla;
 
+import bblsom.compat.AquaAcrobaticsCompat;
+import bblsom.compat.CompatUtil;
 import bblsom.handlers.ForgeConfigHandler;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Map;
 import java.util.Random;
 
-@Mixin(BlockGrass.class)
+@Mixin(value = BlockGrass.class, priority = 990)
 public abstract class BlockGrassMixin {
 	
-	@Unique
-	private boolean bblsom$replacedGrass = false;
-	
-	@Inject(
-			method = "updateTick",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getBlock()Lnet/minecraft/block/Block;", shift = At.Shift.BEFORE),
-			locals = LocalCapture.CAPTURE_FAILHARD
-	)
-	private void bblsom_vanillaBlockGrass_updateTick_inject(World worldIn, BlockPos pos, IBlockState state, Random rand, CallbackInfo ci, int i, BlockPos blockpos, IBlockState iblockstate, IBlockState iblockstate1) {
-		this.bblsom$replacedGrass = false;
-		Map<ForgeConfigHandler.BlockEntry,ForgeConfigHandler.BlockEntry> conversionMap = ForgeConfigHandler.getGrassConversions(state);
-		if(conversionMap != null) {
-			for(Map.Entry<ForgeConfigHandler.BlockEntry,ForgeConfigHandler.BlockEntry> entry : conversionMap.entrySet()) {
-				if(entry.getKey().entryMatches(iblockstate1)) {
-					if(worldIn.getLightFromNeighbors(blockpos.up()) >= 4 && iblockstate.getLightOpacity(worldIn, blockpos.up()) <= 2) {
-						worldIn.setBlockState(blockpos, entry.getValue().getState());
+	/**
+	 * @author fonnymunkey
+	 * @reason add grass spreading customization, overwrite needed to fix crash/compatibility with FluidLogged and AquaAcrobatics
+	 */
+	@Overwrite
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(!worldIn.isRemote) {
+			if(!worldIn.isAreaLoaded(pos, 3)) return;
+			
+			if(CompatUtil.isAquaAcrobaticsLoaded()) {
+				CallbackInfo ci = new CallbackInfo("bblsom$aquaAcrobaticsCompat", true);
+				AquaAcrobaticsCompat.handleUnderwaterGrassLikeBlockWrapped(worldIn, pos, state, rand, ci);
+				if(ci.isCancelled()) return;
+			}
+			
+			int lightUp = worldIn.getLightFromNeighbors(pos.up());
+			if(lightUp < 4 && worldIn.getBlockLightOpacity(pos.up()) > 2) {
+				worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
+			}
+			else if(lightUp >= 9) {
+				for(int i = 0; i < 4; ++i) {
+					BlockPos blockpos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+					
+					if(blockpos.getY() < 0 || blockpos.getY() >= 256 || !worldIn.isBlockLoaded(blockpos)) return;
+					
+					IBlockState iblockstate = worldIn.getBlockState(blockpos);
+					if(state.getBlock() == Blocks.AIR) continue;
+					
+					if(CompatUtil.isAquaAcrobaticsLoaded()) {
+						if(worldIn.getBlockState(blockpos.up()).getMaterial().isLiquid()) continue;
 					}
-					this.bblsom$replacedGrass = true;
-					return;
+					
+					Map<ForgeConfigHandler.BlockEntry,ForgeConfigHandler.BlockEntry> conversionMap = ForgeConfigHandler.getGrassConversions(state);
+					if(conversionMap != null) {
+						boolean matched = false;
+						for(Map.Entry<ForgeConfigHandler.BlockEntry,ForgeConfigHandler.BlockEntry> entry : conversionMap.entrySet()) {
+							if(entry.getKey().entryMatches(iblockstate)) {
+								if(worldIn.getLightFromNeighbors(blockpos.up()) >= 4 && worldIn.getBlockLightOpacity(blockpos.up()) <= 2) {
+									worldIn.setBlockState(blockpos, entry.getValue().getState());
+								}
+								matched = true;
+								break;
+							}
+						}
+						if(matched) continue;
+					}
+					
+					if(iblockstate.getBlock() == Blocks.DIRT && iblockstate.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.DIRT && worldIn.getLightFromNeighbors(blockpos.up()) >= 4 && worldIn.getBlockLightOpacity(blockpos.up()) <= 2) {
+						worldIn.setBlockState(blockpos, Blocks.GRASS.getDefaultState());
+					}
 				}
 			}
 		}
-	}
-	
-	@ModifyExpressionValue(
-			method = "updateTick",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getBlock()Lnet/minecraft/block/Block;")
-	)
-	private Block bblsom_vanillaBlockGrass_updateTick_modify(Block original) {
-		if(!this.bblsom$replacedGrass) return original;
-		this.bblsom$replacedGrass = false;
-		return Blocks.AIR;
 	}
 }
