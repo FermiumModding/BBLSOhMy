@@ -39,12 +39,12 @@ public class CustomBlockGrass extends Block implements ICustomBlockFertile, ICus
 	private Block baseBlock;
 	private Block farmlandBlock;
 	
-	public CustomBlockGrass(String name, boolean supportsGeneralPlants, boolean supportsSandyPlants, boolean supportsMushrooms, ResourceLocation baseBlockLocation, ResourceLocation farmlandBlockLocation) {
-		super(Material.GRASS);
+	public CustomBlockGrass(String name, boolean supportsGeneralPlants, boolean supportsSandyPlants, boolean supportsMushrooms, float hardness, Material material, SoundType soundType, ResourceLocation baseBlockLocation, ResourceLocation farmlandBlockLocation) {
+		super(material);
 		this.setRegistryName(BBLSOhMy.MODID + ":" + name);
 		this.setTranslationKey(BBLSOhMy.MODID + "." + name);
-		this.setHardness(0.6F);
-		this.setSoundType(SoundType.PLANT);
+		this.setHardness(hardness);
+		this.setSoundType(soundType);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockGrass.SNOWY, Boolean.FALSE));
 		this.setTickRandomly(true);
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);

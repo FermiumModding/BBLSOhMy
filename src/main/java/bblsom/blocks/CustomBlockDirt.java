@@ -29,13 +29,13 @@ public class CustomBlockDirt extends Block implements ICustomBlockFertile, ICust
 	
 	private Block farmlandBlock;
 	
-	public CustomBlockDirt(String name, boolean supportsGeneralPlants, boolean supportsSandyPlants, boolean supportsMushrooms, ResourceLocation farmlandBlockLocation) {
-		super(Material.GROUND);
+	public CustomBlockDirt(String name, boolean supportsGeneralPlants, boolean supportsSandyPlants, boolean supportsMushrooms, float hardness, Material material, SoundType soundType, ResourceLocation farmlandBlockLocation) {
+		super(material);
 		this.setRegistryName(BBLSOhMy.MODID + ":" + name);
 		this.setTranslationKey(BBLSOhMy.MODID + "." + name);
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.setHardness(0.5F);
-		this.setSoundType(SoundType.GROUND);
+		this.setHardness(hardness);
+		this.setSoundType(soundType);
 		this.supportsGeneralPlants = supportsGeneralPlants;
 		this.supportsSandyPlants = supportsSandyPlants;
 		this.supportsMushrooms = supportsMushrooms;

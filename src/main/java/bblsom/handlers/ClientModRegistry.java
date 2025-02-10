@@ -44,6 +44,7 @@ public class ClientModRegistry {
         registerLeavesModels(ModRegistry.ITEMS_LEAVES.toArray(new Item[0]));
         registerModels(ModRegistry.ITEMS_MUSHROOM.toArray(new Item[0]));
         registerHugeMushroomModels(ModRegistry.ITEMS_HUGEMUSHROOM.toArray(new Item[0]));
+        registerModels(ModRegistry.ITEMS_LITTER.toArray(new Item[0]));
         
         registerDoorMapper(ModRegistry.BLOCKS_DOORS.toArray(new Block[0]));
         registerLeavesMapper(ModRegistry.BLOCKS_LEAVES.toArray(new Block[0]));

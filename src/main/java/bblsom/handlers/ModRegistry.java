@@ -7,6 +7,7 @@ import bblsom.item.CustomItemHorseArmor;
 import bblsom.item.CustomItemSign;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.item.Item;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +44,11 @@ public class ModRegistry {
         public static final List<Item> ITEMS_LEAVES = new ArrayList<>();
         public static final List<Item> ITEMS_MUSHROOM = new ArrayList<>();
         public static final List<Item> ITEMS_HUGEMUSHROOM = new ArrayList<>();
+        public static final List<Item> ITEMS_LITTER = new ArrayList<>();
+        
         public static final List<CustomItemBoat> ITEMS_BOATS = new ArrayList<>();
         public static final List<Item> ITEMS_HORSEARMOR = new ArrayList<>();
+        
         public static final List<Block> BLOCKS_BUTTONS = new ArrayList<>();
         public static final List<Block> BLOCKS_LEVERS = new ArrayList<>();
         public static final List<Block> BLOCKS_SIGNS = new ArrayList<>();
@@ -59,6 +64,7 @@ public class ModRegistry {
         public static final List<Block> BLOCKS_LEAVES = new ArrayList<>();
         public static final List<Block> BLOCKS_MUSHROOM = new ArrayList<>();
         public static final List<Block> BLOCKS_HUGEMUSHROOM = new ArrayList<>();
+        public static final List<Block> BLOCKS_LITTER = new ArrayList<>();
         
         public static final SoundEvent BLOCK_HONEY_SLIDE = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_slide")).setRegistryName("block_honey_slide");
         public static final SoundEvent BLOCK_HONEY_BREAK = new SoundEvent(new ResourceLocation(BBLSOhMy.MODID, "block_honey_break")).setRegistryName("block_honey_break");
@@ -206,11 +212,25 @@ public class ModRegistry {
                                 if(args.length > 3) {
                                         supportsMushrooms = Boolean.parseBoolean(args[3].trim());
                                 }
-                                ResourceLocation farmlandBlockLocation = null;
+                                float hardness = 0.5F;
                                 if(args.length > 4) {
-                                        farmlandBlockLocation = new ResourceLocation(args[4].trim());
+                                        hardness = Float.parseFloat(args[4].trim());
                                 }
-                                BLOCKS_DIRT.add(new CustomBlockDirt(name, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms, farmlandBlockLocation));
+                                Material material = null;
+                                if(args.length > 5) {
+                                        material = materialFromString(args[5].trim());
+                                }
+                                if(material == null) material = Material.GROUND;
+                                SoundType soundType = null;
+                                if(args.length > 6) {
+                                        soundType = soundTypeFromString(args[6].trim());
+                                }
+                                if(soundType == null) soundType = SoundType.GROUND;
+                                ResourceLocation farmlandBlockLocation = null;
+                                if(args.length > 7) {
+                                        farmlandBlockLocation = new ResourceLocation(args[7].trim());
+                                }
+                                BLOCKS_DIRT.add(new CustomBlockDirt(name, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms, hardness, material, soundType, farmlandBlockLocation));
                         }
                         catch(Exception ex) {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse dirt entry: " + entry);
@@ -234,7 +254,21 @@ public class ModRegistry {
                                 if(args.length > 4) {
                                         supportsMushrooms = Boolean.parseBoolean(args[4].trim());
                                 }
-                                BLOCKS_FALLINGDIRT.add(new CustomBlockFallingDirt(name, dustColor, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms));
+                                float hardness = 0.5F;
+                                if(args.length > 5) {
+                                        hardness = Float.parseFloat(args[5].trim());
+                                }
+                                Material material = null;
+                                if(args.length > 6) {
+                                        material = materialFromString(args[6].trim());
+                                }
+                                if(material == null) material = Material.SAND;
+                                SoundType soundType = null;
+                                if(args.length > 7) {
+                                        soundType = soundTypeFromString(args[7].trim());
+                                }
+                                if(soundType == null) soundType = SoundType.GROUND;
+                                BLOCKS_FALLINGDIRT.add(new CustomBlockFallingDirt(name, dustColor, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms, hardness, material, soundType));
                         }
                         catch(Exception ex) {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse falling dirt entry: " + entry);
@@ -258,11 +292,25 @@ public class ModRegistry {
                                 if(args.length > 4) {
                                         supportsMushrooms = Boolean.parseBoolean(args[4].trim());
                                 }
-                                ResourceLocation farmlandBlockLocation = null;
+                                float hardness = 0.6F;
                                 if(args.length > 5) {
-                                        farmlandBlockLocation = new ResourceLocation(args[5].trim());
+                                        hardness = Float.parseFloat(args[5].trim());
                                 }
-                                BLOCKS_GRASS.add(new CustomBlockGrass(name, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms, baseBlockLocation, farmlandBlockLocation));
+                                Material material = null;
+                                if(args.length > 6) {
+                                        material = materialFromString(args[6].trim());
+                                }
+                                if(material == null) material = Material.GRASS;
+                                SoundType soundType = null;
+                                if(args.length > 7) {
+                                        soundType = soundTypeFromString(args[7].trim());
+                                }
+                                if(soundType == null) soundType = SoundType.PLANT;
+                                ResourceLocation farmlandBlockLocation = null;
+                                if(args.length > 8) {
+                                        farmlandBlockLocation = new ResourceLocation(args[8].trim());
+                                }
+                                BLOCKS_GRASS.add(new CustomBlockGrass(name, supportsGeneralPlants, supportsSandyPlants, supportsMushrooms, hardness, material, soundType, baseBlockLocation, farmlandBlockLocation));
                         }
                         catch(Exception ex) {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse grass entry: " + entry);
@@ -343,6 +391,19 @@ public class ModRegistry {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse mushroom entry: " + entry);
                         }
                 }
+                for(String entry : ForgeConfigHandler.server.customLitter) {
+                        if(entry.isEmpty()) continue;
+                        String[] args = entry.split(",");
+                        try {
+                                String name = args[0].trim();
+                                boolean checkCanStay = Boolean.parseBoolean(args[1].trim());
+                                double dropChance = Double.parseDouble(args[2].trim());
+                                BLOCKS_LITTER.add(new CustomBlockLitter(name, checkCanStay, dropChance));
+                        }
+                        catch(Exception ex) {
+                                BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse litter entry: " + entry);
+                        }
+                }
         }
 
         @SubscribeEvent
@@ -398,6 +459,9 @@ public class ModRegistry {
                 for(Item item : ITEMS_HUGEMUSHROOM) {
                         event.getRegistry().register(item);
                 }
+                for(Item item : ITEMS_LITTER) {
+                        event.getRegistry().register(item);
+                }
         }
         
         @SubscribeEvent
@@ -447,6 +511,9 @@ public class ModRegistry {
                 for(Block block : BLOCKS_HUGEMUSHROOM) {
                         event.getRegistry().register(block);
                 }
+                for(Block block : BLOCKS_LITTER) {
+                        event.getRegistry().register(block);
+                }
         }
         
         @SubscribeEvent
@@ -475,5 +542,69 @@ public class ModRegistry {
                 builder.name(name);
                 builder.tracker(range, 1, true);
                 event.getRegistry().register(builder.build());
+        }
+        
+        @Nullable
+        private static Material materialFromString(String name) {
+                switch(name) {
+                        case "AIR": return Material.AIR;
+                        case "GRASS": return Material.GRASS;
+                        case "GROUND": return Material.GROUND;
+                        case "WOOD": return Material.WOOD;
+                        case "ROCK": return Material.ROCK;
+                        case "IRON": return Material.IRON;
+                        case "ANVIL": return Material.ANVIL;
+                        case "WATER": return Material.WATER;
+                        case "LAVA": return Material.LAVA;
+                        case "LEAVES": return Material.LEAVES;
+                        case "PLANTS": return Material.PLANTS;
+                        case "VINE": return Material.VINE;
+                        case "SPONGE": return Material.SPONGE;
+                        case "CLOTH": return Material.CLOTH;
+                        case "FIRE": return Material.FIRE;
+                        case "SAND": return Material.SAND;
+                        case "CIRCUITS": return Material.CIRCUITS;
+                        case "CARPET": return Material.CARPET;
+                        case "GLASS": return Material.GLASS;
+                        case "REDSTONE_LIGHT": return Material.REDSTONE_LIGHT;
+                        case "TNT": return Material.TNT;
+                        case "CORAL": return Material.CORAL;
+                        case "ICE": return Material.ICE;
+                        case "PACKED_ICE": return Material.PACKED_ICE;
+                        case "SNOW": return Material.SNOW;
+                        case "CRAFTED_SNOW": return Material.CRAFTED_SNOW;
+                        case "CACTUS": return Material.CACTUS;
+                        case "CLAY": return Material.CLAY;
+                        case "GOURD": return Material.GOURD;
+                        case "DRAGON_EGG": return Material.DRAGON_EGG;
+                        case "PORTAL": return Material.PORTAL;
+                        case "CAKE": return Material.CAKE;
+                        case "WEB": return Material.WEB;
+                        case "PISTON": return Material.PISTON;
+                        case "BARRIER": return Material.BARRIER;
+                        case "STRUCTURE_VOID": return Material.STRUCTURE_VOID;
+                }
+                BBLSOhMy.LOGGER.log(Level.WARN, "Invalid material name: " + name);
+                return null;
+        }
+        
+        @Nullable
+        private static SoundType soundTypeFromString(String name) {
+                switch(name) {
+                        case "WOOD": return SoundType.WOOD;
+                        case "GROUND": return SoundType.GROUND;
+                        case "PLANT": return SoundType.PLANT;
+                        case "STONE": return SoundType.STONE;
+                        case "METAL": return SoundType.METAL;
+                        case "GLASS": return SoundType.GLASS;
+                        case "CLOTH": return SoundType.CLOTH;
+                        case "SAND": return SoundType.SAND;
+                        case "SNOW": return SoundType.SNOW;
+                        case "LADDER": return SoundType.LADDER;
+                        case "ANVIL": return SoundType.ANVIL;
+                        case "SLIME": return SoundType.SLIME;
+                }
+                BBLSOhMy.LOGGER.log(Level.WARN, "Invalid sound type name: " + name);
+                return null;
         }
 }

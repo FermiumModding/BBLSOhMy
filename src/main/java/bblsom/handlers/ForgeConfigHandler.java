@@ -120,11 +120,14 @@ public class ForgeConfigHandler {
 		
 		@Config.Comment(
 				"Custom Dirt to be registered" + "\n" +
-						"Format: String name, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms, BlockID farmlandBlock" + "\n" +
+						"Format: String name, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms, Float hardness, String material, String soundType, BlockID farmlandBlock" + "\n" +
 						"String name: the name of the item/block to be registered" + "\n" +
 						"(Optional, default true) Boolean supportsGeneralPlants: if the dirt should support general plants growing on it" + "\n" +
 						"(Optional, default false) Boolean supportsSandyPlants: if the dirt should support sandy plants growing on it" + "\n" +
 						"(Optional, default false) Boolean supportsMushrooms: if the dirt should support mushrooms growing on it" + "\n" +
+						"(Optional, default 0.5) Float hardness: the block hardness" + "\n" +
+						"(Optional, default GROUND) String material: the block Material" + "\n" +
+						"(Optional, default GROUND) String soundType: the block SoundType" + "\n" +
 						"(Optional, default disabled) BlockID farmlandBlock: the farmland block that the dirt should turn into upon hoe-ing")
 		@Config.Name("Custom Dirt Entries")
 		@Config.RequiresMcRestart
@@ -132,24 +135,30 @@ public class ForgeConfigHandler {
 		
 		@Config.Comment(
 				"Custom Falling Dirt to be registered" + "\n" +
-						"Format: String name, int dustColor, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms" + "\n" +
+						"Format: String name, int dustColor, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms, Float hardness, String material, String soundType" + "\n" +
 						"String name: the name of the item/block to be registered" + "\n" +
 						"int dustColor: decimal color value to be used for block falling particles" + "\n" +
 						"(Optional, default true) Boolean supportsGeneralPlants: if the dirt should support general plants growing on it" + "\n" +
 						"(Optional, default false) Boolean supportsSandyPlants: if the dirt should support sandy plants growing on it" + "\n" +
-						"(Optional, default false) Boolean supportsMushrooms: if the dirt should support mushrooms growing on it")
+						"(Optional, default false) Boolean supportsMushrooms: if the dirt should support mushrooms growing on it" + "\n" +
+						"(Optional, default 0.5) Float hardness: the block hardness" + "\n" +
+						"(Optional, default SAND) String material: the block Material" + "\n" +
+						"(Optional, default GROUND) String soundType: the block SoundType")
 		@Config.Name("Custom Falling Dirt Entries")
 		@Config.RequiresMcRestart
 		public String[] customFallingDirt = {""};
 		
 		@Config.Comment(
 				"Custom Grass to be registered" + "\n" +
-						"Format: String name, BlockID baseBlock, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms, BlockID farmlandBlock" + "\n" +
+						"Format: String name, BlockID baseBlock, Boolean supportsGeneralPlants, Boolean supportsSandyPlants, Boolean supportsMushrooms, Float hardness, String material, String soundType, BlockID farmlandBlock" + "\n" +
 						"String name: the name of the item/block to be registered" + "\n" +
 						"BlockID baseBlock: the block that the grass converts to more grass, and reverts to" + "\n" +
 						"(Optional, default true) Boolean supportsGeneralPlants: if the dirt should support general plants growing on it" + "\n" +
 						"(Optional, default false) Boolean supportsSandyPlants: if the dirt should support sandy plants growing on it" + "\n" +
 						"(Optional, default false) Boolean supportsMushrooms: if the dirt should support mushrooms growing on it" + "\n" +
+						"(Optional, default 0.6) Float hardness: the block hardness" + "\n" +
+						"(Optional, default GRASS) String material: the block Material" + "\n" +
+						"(Optional, default PLANT) String soundType: the block SoundType" + "\n" +
 						"(Optional, default disabled) BlockID farmlandBlock: the farmland block that the grass should turn into upon hoe-ing")
 		@Config.Name("Custom Grass Entries")
 		@Config.RequiresMcRestart
@@ -190,6 +199,16 @@ public class ForgeConfigHandler {
 		@Config.Name("Custom Mushroom Entries")
 		@Config.RequiresMcRestart
 		public String[] customMushroom = {""};
+		
+		@Config.Comment(
+				"Custom Litter to be registered" + "\n" +
+						"Format: String name, Boolean checkCanStay, double dropChance" + "\n" +
+						"String name: the name of the item/block to be registered" + "\n" +
+						"Boolean checkCanStay: if the litter should check if the soil can sustain it like flowers" + "\n" +
+						"Double dropChance: item drop chance per filled slice of litter")
+		@Config.Name("Custom Litter Entries")
+		@Config.RequiresMcRestart
+		public String[] customLitter = {""};
 		
 		@Config.Comment(
 				"Allows for additional customization of what blocks grass-like blocks can target and what blocks they convert into" + "\n" +
