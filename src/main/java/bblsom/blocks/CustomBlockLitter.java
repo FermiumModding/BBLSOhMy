@@ -39,7 +39,7 @@ public class CustomBlockLitter extends BlockBush {
 	private final double dropChance;
 	private final Item dropItem;
 	
-	public CustomBlockLitter(String name, boolean checkCanStay, double dropChance) {
+	public CustomBlockLitter(String name, boolean checkCanStay, double dropChance, SoundType soundType) {
 		super();
 		this.setRegistryName(BBLSOhMy.MODID + ":" + name);
 		this.setTranslationKey(BBLSOhMy.MODID + "." + name);
@@ -48,6 +48,7 @@ public class CustomBlockLitter extends BlockBush {
 		this.dropChance = dropChance;
 		this.dropItem = new CustomItemLitter(this).setRegistryName(this.getRegistryName()).setTranslationKey(this.getTranslationKey());
 		ModRegistry.ITEMS_LITTER.add(this.dropItem);
+		this.setSoundType(soundType);
 	}
 	
 	@Override

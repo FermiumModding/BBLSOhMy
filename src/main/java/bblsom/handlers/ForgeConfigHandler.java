@@ -205,7 +205,8 @@ public class ForgeConfigHandler {
 						"Format: String name, Boolean checkCanStay, double dropChance" + "\n" +
 						"String name: the name of the item/block to be registered" + "\n" +
 						"Boolean checkCanStay: if the litter should check if the soil can sustain it like flowers" + "\n" +
-						"Double dropChance: item drop chance per filled slice of litter")
+						"Double dropChance: item drop chance per filled slice of litter" + "\n" +
+						"(Optional, default PLANT) String soundType: the block SoundType")
 		@Config.Name("Custom Litter Entries")
 		@Config.RequiresMcRestart
 		public String[] customLitter = {""};

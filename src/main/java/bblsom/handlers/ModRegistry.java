@@ -398,7 +398,12 @@ public class ModRegistry {
                                 String name = args[0].trim();
                                 boolean checkCanStay = Boolean.parseBoolean(args[1].trim());
                                 double dropChance = Double.parseDouble(args[2].trim());
-                                BLOCKS_LITTER.add(new CustomBlockLitter(name, checkCanStay, dropChance));
+                                SoundType soundType = null;
+                                if(args.length > 3) {
+                                        soundType = soundTypeFromString(args[3].trim());
+                                }
+                                if(soundType == null) soundType = SoundType.PLANT;
+                                BLOCKS_LITTER.add(new CustomBlockLitter(name, checkCanStay, dropChance, soundType));
                         }
                         catch(Exception ex) {
                                 BBLSOhMy.LOGGER.log(Level.ERROR, "Failed to parse litter entry: " + entry);
